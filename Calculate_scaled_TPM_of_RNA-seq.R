@@ -1,8 +1,5 @@
-#This script calculate the scaled TPM of the RNA-seq data.
-
 library(edgeR)
 
-#This is a function which removes version from ensembl IDs.
 StripVer <- function(ID){
   N <- regexpr("\\.", ID)[[1]]
   return(substr(ID, 1, N-1))
@@ -25,8 +22,6 @@ for(i in 1:ncol(counts_tpm)){
   counts_tpm[,i] <- (counts_tpm[,i]/normfactor_samples$normlib[i])*1000000 
 }
 
-#Remove version from ensembl IDs
 rownames(counts_tpm) <- Vectorize(StripVer)(rownames(counts_tpm))
 
-#Save
 write.csv(counts_tpm, file = "Scaled_TPM.csv")
